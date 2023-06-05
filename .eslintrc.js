@@ -6,7 +6,8 @@ module.exports = {
   extends: 'standard-with-typescript',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: './tsconfig.json'
   },
   rules: {
   }
