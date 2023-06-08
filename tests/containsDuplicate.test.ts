@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { containsDuplicate } from '../src/containsDuplicate'
+import { containsDuplicate } from '../src/leetcode/containsDuplicate'
 
 describe('Contains Duplicate', () => {
   it('Devolver falso si el array es vacio', () => {
