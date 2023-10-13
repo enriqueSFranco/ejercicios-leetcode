@@ -3,7 +3,7 @@ import { swap } from '../helpers/swap'
 // Bubble sort in Python
 
 // O(n^2)
-export function bubbleSort(array: number[]): number[] {
+export function bubbleSort (array: number[]): number[] {
   const arraySize = array.length
 
   if (arraySize === 1 || arraySize === 0) return array
@@ -18,7 +18,7 @@ export function bubbleSort(array: number[]): number[] {
   return array
 }
 // [-2, 45, 0, 11, -9]
-export function bubbleSortMin(array: number[]): number[] {
+export function bubbleSortMin (array: number[]): number[] {
   for (let i = 0; i < array.length; i++) {
     let swapped = false
     for (let j = 0; j < array.length - i - 1; j++) {
