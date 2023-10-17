@@ -4,6 +4,7 @@
   "description": "Problemas de la página de https://leetcode.com",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
