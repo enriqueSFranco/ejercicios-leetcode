@@ -4,25 +4,33 @@ interface LinkedListActions<T> {
   append: (value: T) => void
   insertAt: (value: T, index: number) => void
   pop: () => T | null
+  clear: () => void
 }
 
-class Node<T> {
-  constructor(public value: T, public next: Node<T> | null = null) { }
+type NextNode<T> = NodeType<T> | null
+
+interface NodeType<T> {
+  value: T
+  next: NextNode<T>
+}
+
+class Node<T> implements NodeType<T> {
+  constructor(public value: T, public next: Node<T> | null) { }
 }
 
 export class LinkedList<T> implements LinkedListActions<T> {
-  private count: number
-
-  constructor(private head: Node<T>, private tail: Node<T>) {
-    this.count = 0
-  }
+  constructor(private head: Node<T> | null = null, private tail: Node<T> | null = null, private count: number = 0) { }
 
   private createNode (value: T): Node<T> {
-    return new Node(value)
+    return new Node(value, null)
   }
 
   isEmpty (): boolean {
     return this.head === null
+  }
+
+  size (): number {
+    return this.count
   }
 
   push (value: T): void {
@@ -44,7 +52,9 @@ export class LinkedList<T> implements LinkedListActions<T> {
     if (this.isEmpty()) {
       this.head = node
     } else {
-      this.tail.next = node
+      if (this.tail !== null) {
+        this.tail.next = node
+      }
     }
     this.tail = node
     this.count++
@@ -60,25 +70,87 @@ export class LinkedList<T> implements LinkedListActions<T> {
       this.append(value)
       return
     }
-    const node = new Node(value)
+    const node = new Node(value, null)
     let currentNode: Node<T> | null = this.head
 
     for (let idx = 0; idx < index; idx++) {
-      currentNode = currentNode?.next
+      currentNode = currentNode.next
     }
-    const nextNode = currentNode?.next
-    currentNode?.next = node
+    const nextNode = currentNode.next
+    currentNode.next = node
     node.next = nextNode
   }
 
   pop (): T | null {
     if (this.isEmpty()) {
-      throw new Error('Index out of bounds')
+      return null
     }
-    const node = this.head
+    const node: Node<T> | null = this.head
     this.head = this.head.next
     this.count--
 
     return node.value
   }
+
+  findMiddle (first: Node<T>, last: Node<T>): Node<T> | null {
+    let slow = first
+    let fast = first.next
+
+    while (fast !== null && fast !== last) {
+      fast = fast.next
+      if (fast !== last) {
+        slow = slow.next
+        fast = fast.next
+      }
+    }
+    return slow
+  }
+
+  findElement (value: T): Node<T> | null {
+    if (this.isEmpty()) {
+      return null
+    }
+
+    let low = this.head
+    let high = this.tail
+
+    while (low !== high) {
+      const middle = this.findMiddle(low, high)
+
+      if (middle === null) return null
+
+      if (middle === value) {
+        return middle
+      } else if (middle.value < value) {
+        low = middle.next
+      } else {
+        high = middle
+      }
+    }
+  }
+
+  clear (): void {
+    this.head = null
+    this.tail = null
+    this.count = 0
+  }
+
+  log (): void {
+    let currentNode = this.head
+
+    while (currentNode !== null) {
+      console.log(currentNode?.value)
+      if (currentNode?.next !== undefined) {
+        currentNode = currentNode?.next
+      }
+    }
+  }
 }
+
+const linkedList = new LinkedList()
+
+linkedList.push(1)
+linkedList.push(2)
+linkedList.push(3)
+
+linkedList.log()
