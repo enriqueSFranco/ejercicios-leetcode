@@ -36,12 +36,9 @@ export class Stack<T> implements StackActions<T> {
   }
 
   pop (): T | null {
-    if (this.isEmpty()) {
-      return null
-    }
+    if (this.isEmpty()) return null
 
     const nodeToBeRemoved = this.top
-
     this.top = nodeToBeRemoved?.next
     this.count--
     return nodeToBeRemoved.value
