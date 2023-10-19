@@ -51,10 +51,10 @@ export class BinaryTree<T> {
     if (root.value === value) { return root }
     else if (root.value < value) {
       // TODO: Buscar por la derecha
-      this.searchNode(root.right, value)
+      return this.searchNode(root.right, value)
     } else {
       // TODO: Buscar por la izquierda
-      this.searchNode(root.left, value)
+      return this.searchNode(root.left, value)
     }
   }
 }
